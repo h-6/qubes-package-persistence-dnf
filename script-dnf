@@ -1,0 +1,11 @@
+#!/bin/bash
+
+mkdir -m 755 /rw/dnf-cache
+cp /etc/dnf/dnf.conf /rw/dnf-cache/dnf.conf
+sed -i '/^cachedir.*=/d' /rw/dnf-cache/dnf.conf
+sed -i '/^keepcache.*=/d' /rw/dnf-cache/dnf.conf
+echo 'cachedir=/rw/dnf-cache/$basearch/$releasever' >>/rw/dnf-cache/dnf.conf
+echo 'keepcache=1' >>/rw/dnf-cache/dnf.conf
+ln -fs /rw/dnf-cache/dnf.conf /etc/dnf/dnf.conf
+chmod +x /rw/config/rc.local
+echo 'ln -fs /rw/dnf-cache/dnf.conf /etc/dnf/dnf.conf' >> /rw/config/rc.local
